@@ -11,6 +11,7 @@
     <modules>
         <module>meal-domain</module>
         <module>meal-infra</module>
+        <module>meal-web</module>
     </modules>
 
     <properties>

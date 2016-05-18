@@ -20,4 +20,9 @@ public class MealAccountingRepository implements MealAccounting {
         MealInvoice februaryInvoice2 = new MealInvoice(20.5, LocalDate.of(2016, Month.FEBRUARY, 2));
         return Arrays.asList(februaryInvoice1, februaryInvoice2);
     }
+
+    @Override
+    public void save(MealInvoice mealInvoice) {
+        return;
+    }
 }

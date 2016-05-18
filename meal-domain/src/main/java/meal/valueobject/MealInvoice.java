@@ -12,14 +12,14 @@ public final class MealInvoice {
 
     //TODO SPE : contrainte d'unicité sur la date ???
 
-    public final Double amount;
+    public final Double price;
     public final LocalDate date;
 
-    public MealInvoice(Double amount, LocalDate date) {
-        if (amount <= 0) {
+    public MealInvoice(Double price, LocalDate date) {
+        if (price <= 0) {
             throw new IllegalArgumentException("A Meal Invoice price must be positive");
         }
-        this.amount = amount;
+        this.price = price;
         this.date = date;
     }
 }

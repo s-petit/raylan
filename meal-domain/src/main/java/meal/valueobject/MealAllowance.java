@@ -2,24 +2,27 @@ package meal.valueobject;
 
 import annotation.ValueObject;
 
+/**
+ * A meal allowance represents legal allowance given the year scale and the meal price
+ */
 @ValueObject
 public final class MealAllowance {
 
     // a voir si on scale une allaownace sur un jour ou sur un mois selon le besoin métier
 
-    public final MealInvoice mealInvoice;
+    public final Double mealPrice;
     public final MealYearlyScale mealYearlyScale;
 
     public MealAllowance(MealInvoice mealInvoice, MealYearlyScale mealYearlyScale) {
-        this.mealInvoice = mealInvoice;
+        this.mealPrice = mealInvoice.price;
         this.mealYearlyScale = mealYearlyScale;
     }
 
     public Double getAmountToDeduct() {
-        if (mealInvoice.amount > mealYearlyScale.max) {
+        if (mealPrice > mealYearlyScale.max) {
             return mealYearlyScale.max;
         }
-        return mealInvoice.amount;
+        return mealPrice;
     }
 
     public Double getDeductedAmount() {
@@ -31,6 +34,6 @@ public final class MealAllowance {
     }
 
     public Double getUndeductedAmount() {
-        return mealInvoice.amount - getDeductedAmount();
+        return mealPrice - getDeductedAmount();
     }
 }
