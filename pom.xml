@@ -6,7 +6,12 @@
 
     <groupId>org.spe</groupId>
     <artifactId>raylan</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>meal-domain</module>
+        <module>meal-infra</module>
+    </modules>
 
     <properties>
         <skipTests>false</skipTests>

@@ -11,13 +11,13 @@ import java.time.Year;
 @ValueObject
 public final class MealYearlyScale {
 
-    public final Integer min;
-    public final Integer max;
+    public final Double min;
+    public final Double max;
     public final Year year;
 
-    public MealYearlyScale(Integer min, Integer max, Year year) {
+    public MealYearlyScale(Double min, Double max, int year) {
         this.min = min;
         this.max = max;
-        this.year = year;
+        this.year = Year.of(year);
     }
 }

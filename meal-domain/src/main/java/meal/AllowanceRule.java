@@ -2,6 +2,6 @@ package meal;
 
 import meal.valueobject.MealYearlyScale;
 
-public interface MealScale {
+public interface AllowanceRule {
     MealYearlyScale get(int year);
 }

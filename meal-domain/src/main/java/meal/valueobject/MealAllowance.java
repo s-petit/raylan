@@ -5,6 +5,8 @@ import annotation.ValueObject;
 @ValueObject
 public final class MealAllowance {
 
+    // a voir si on scale une allaownace sur un jour ou sur un mois selon le besoin métier
+
     public final MealInvoice mealInvoice;
     public final MealYearlyScale mealYearlyScale;
 
@@ -13,18 +15,23 @@ public final class MealAllowance {
         this.mealYearlyScale = mealYearlyScale;
     }
 
-    public Integer getDeductibleAmount() {
+    // TODO SPE: méthode à privatiser, renommer
+    public Double getDeductibleAmount() {
         if (mealInvoice.amount > mealYearlyScale.max) {
             return mealYearlyScale.max;
         }
         return mealInvoice.amount;
     }
 
-    public Integer getDeductedAmount() {
-        return getDeductibleAmount() - mealYearlyScale.min;
+    public Double getDeductedAmount() {
+        Double deductibleAmount = getDeductibleAmount();
+        if (deductibleAmount < mealYearlyScale.min) {
+            return 0.0;
+        }
+        return deductibleAmount - mealYearlyScale.min;
     }
 
-    public Integer getNotDeductedAmount() {
+    public Double getUndeductibleAmount() {
         return mealInvoice.amount - getDeductedAmount();
     }
 }

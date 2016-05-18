@@ -10,10 +10,12 @@ import java.time.LocalDate;
 @ValueObject
 public final class MealInvoice {
 
-    public final Integer amount;
+    //TODO SPE : contrainte d'unicité sur la date ???
+
+    public final Double amount;
     public final LocalDate date;
 
-    public MealInvoice(Integer amount, LocalDate date) {
+    public MealInvoice(Double amount, LocalDate date) {
         if (amount <= 0) {
             throw new IllegalArgumentException("A Meal Invoice price must be positive");
         }
