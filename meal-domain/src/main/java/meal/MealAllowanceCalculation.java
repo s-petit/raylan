@@ -19,12 +19,12 @@ public final class MealAllowanceCalculation {
         this.mealAccounting = mealAccounting;
     }
 
-    public Double getUndeductibleTotal(YearMonth yearMonth) {
+    public Double getUndeductedTotal(YearMonth yearMonth) {
         MealYearlyScale scale = allowanceRule.get(yearMonth.getYear());
         List<MealInvoice> invoices = mealAccounting.get(yearMonth);
 
         return invoices.stream()
-                .mapToDouble(mealInvoice -> new MealAllowance(mealInvoice, scale).getUndeductibleAmount())
+                .mapToDouble(mealInvoice -> new MealAllowance(mealInvoice, scale).getUndeductedAmount())
                 .sum();
     }
 }

@@ -15,8 +15,7 @@ public final class MealAllowance {
         this.mealYearlyScale = mealYearlyScale;
     }
 
-    // TODO SPE: méthode à privatiser, renommer
-    public Double getDeductibleAmount() {
+    public Double getAmountToDeduct() {
         if (mealInvoice.amount > mealYearlyScale.max) {
             return mealYearlyScale.max;
         }
@@ -24,14 +23,14 @@ public final class MealAllowance {
     }
 
     public Double getDeductedAmount() {
-        Double deductibleAmount = getDeductibleAmount();
+        Double deductibleAmount = getAmountToDeduct();
         if (deductibleAmount < mealYearlyScale.min) {
             return 0.0;
         }
         return deductibleAmount - mealYearlyScale.min;
     }
 
-    public Double getUndeductibleAmount() {
+    public Double getUndeductedAmount() {
         return mealInvoice.amount - getDeductedAmount();
     }
 }

@@ -35,15 +35,14 @@ public class MealAllowanceCalculationTest {
     @Test
     public void should_compute_not_deductible_total_for_a_given_month() {
         MealYearlyScale scale2016 = new MealYearlyScale(2.5, 20.0, 2016);
-        MealInvoice februaryInvoice1 = new MealInvoice(15.5, LocalDate.of(2016, Month.FEBRUARY, 1)); // 15.5 -> 2.5
-        MealInvoice februaryInvoice2 = new MealInvoice(20.5, LocalDate.of(2016, Month.FEBRUARY, 2)); // 20.5 -> 2.5 + 0.5
-        //MealInvoice marchInvoice = new MealInvoice(10.5, LocalDate.of(2016, Month.MARCH, 1)); // N/A MARCH
+        MealInvoice februaryInvoice1 = new MealInvoice(15.5, LocalDate.of(2016, Month.FEBRUARY, 1));
+        MealInvoice februaryInvoice2 = new MealInvoice(20.5, LocalDate.of(2016, Month.FEBRUARY, 2));
 
         YearMonth feb2016 = YearMonth.of(2016, Month.FEBRUARY);
         when(mealAccounting.get(feb2016)).thenReturn(Arrays.asList(februaryInvoice1, februaryInvoice2));
         when(allowanceRule.get(2016)).thenReturn(scale2016).thenReturn(scale2016);
 
-        Double undeductibleTotal = mealAllowanceCalculation.getUndeductibleTotal(feb2016);
-        assertThat(undeductibleTotal).isEqualTo(5.5);
+        Double undeductedTotal = mealAllowanceCalculation.getUndeductedTotal(feb2016);
+        assertThat(undeductedTotal).isEqualTo(5.5);
     }
 }
