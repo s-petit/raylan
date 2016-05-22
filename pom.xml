@@ -12,6 +12,8 @@
         <module>meal-domain</module>
         <module>meal-infra</module>
         <module>meal-web</module>
+        <module>raylan-web</module>
+        <module>raylan-api</module>
     </modules>
 
     <properties>
