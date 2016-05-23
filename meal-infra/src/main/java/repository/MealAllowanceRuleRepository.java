@@ -1,3 +1,5 @@
+package repository;
+
 import meal.AllowanceRule;
 import meal.valueobject.MealYearlyScale;
 

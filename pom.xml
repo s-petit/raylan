@@ -11,15 +11,14 @@
     <modules>
         <module>meal-domain</module>
         <module>meal-infra</module>
-        <module>meal-web</module>
-        <module>raylan-web</module>
-        <module>raylan-api</module>
+        <module>meal-api</module>
     </modules>
 
     <properties>
         <skipTests>false</skipTests>
         <skipITs>${skipTests}</skipITs>
         <skipUTs>${skipTests}</skipUTs>
+        <project.version>${version}</project.version>
     </properties>
 
     <dependencies>

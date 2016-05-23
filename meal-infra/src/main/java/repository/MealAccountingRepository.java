@@ -1,3 +1,5 @@
+package repository;
+
 import meal.MealAccounting;
 import meal.valueobject.MealInvoice;
 
