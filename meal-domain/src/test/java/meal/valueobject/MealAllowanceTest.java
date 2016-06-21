@@ -45,7 +45,7 @@ public class MealAllowanceTest {
     }
 
     private MealAllowance buildMealAllowance(double amount, LocalDate date, double minScale, double maxScale) {
-        MealInvoice mealInvoice = new MealInvoice(amount, date);
+        MealInvoice mealInvoice = new MealInvoice(amount, date, "");
         MealYearlyScale mealYearlyScale = new MealYearlyScale(minScale, maxScale, date.getYear());
         return new MealAllowance(mealInvoice, mealYearlyScale);
     }

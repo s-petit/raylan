@@ -1,71 +1,35 @@
-import React, { PropTypes } from 'react';
-import { GlobalStats } from './stats';
-import { connect } from 'react-redux';
-import { DevTools } from './devtools';
+import React from 'react';
+import Meals from './meal-list';
 
-const NoDevToolsCauseInTestEnv = React.createClass({
+const RaylanApp = React.createClass({
+
+    getInitialState() {
+        return {
+            meals: [{label: 'bouchon', amount: 10, date: '23/23'}],
+            selectedMeal: null
+        };
+    },
+
+    componentDidMount() {
+        fetch('/api/meals/all')
+            .then(r => r.json())
+            .then(data => {
+                this.setState({
+                    meals: data,
+                    selectedMeal: data[0]
+                });
+                // TODO Charger les vins de la région : this.loadWinesByRegion(data[0]);
+            })
+            .catch(response => {
+                console.error(response);
+            });
+    },
+
     render() {
-        return null;
-    }
-});
-
-const mapStateToProps = (state) => {
-    return {
-        title: state.title,
-        httpState: state.http.state,
-        httpError: state.http.error
-    };
-}
-
-export const RaylanApp = connect(mapStateToProps)(React.createClass({
-    propTypes: {
-        children: PropTypes.element,
-        dispatch: PropTypes.func.isRequired,
-        httpError: PropTypes.string,
-        httpState: PropTypes.string,
-        title: PropTypes.string.isRequired
-    },
-
-    contextTypes: {
-        router: React.PropTypes.object
-    },
-
-    handleGoBack() {
-        this.context.router.goBack();
-    },
-
-    render () {
-        const Tools = window.TEST ? NoDevToolsCauseInTestEnv : DevTools;
-        const message = this.props.httpState === 'LOADING' ?
-            'Loading ...' :
-            (this.props.httpState === 'LOADED' ?
-                '' :
-                `ERROR : ${this.props.httpError}`);
         return (
-            <div>
-                <div className="grid">
-                    <div className="1/2 grid__cell" style={{
-              height: 20,
-              backgroundColor: this.props.httpState === 'ERROR' ? 'red' : null,
-              color: this.props.httpState === 'ERROR' ? 'white' : 'black'
-            }}>
-                        <div>{message}</div>
-                    </div>
-                </div>
-                <div className="grid">
-                    <div className="1/2 grid__cell">
-                        <h2>
-                            {this.props.title}
-                            <button type="button" onClick={this.handleGoBack}>back</button>
-                        </h2>
-                        {this.props.children}
-                    </div>
-                    <div className="1/2 grid__cell">
-                        <GlobalStats />
-                    </div>
-                </div>
-                <Tools />
-            </div>
-        );
+           <Meals meals={this.state.meals}/>
+        )
     }
-}));
+})
+
+export default RaylanApp;

@@ -8,11 +8,11 @@ public class MealInvoiceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void should_throw_exception_when_amount_is_negative() {
-        new MealInvoice(-1.1, LocalDate.now());
+        new MealInvoice(-1.1, LocalDate.now(), "");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void should_throw_exception_when_amount_is_zero() {
-        new MealInvoice(0.0, LocalDate.now());
+        new MealInvoice(0.0, LocalDate.now(), "");
     }
 }
