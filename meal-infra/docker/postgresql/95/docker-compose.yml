@@ -1,0 +1,12 @@
+version: '2'
+services:
+  raylan_db:
+    image: postgres:9.5
+    volumes:
+      - /Users/spetit/pgdata:/pgdata
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=raylan
+      - POSTGRES_PASSWORD=raylan
+      - PGDATA=/pgdata
