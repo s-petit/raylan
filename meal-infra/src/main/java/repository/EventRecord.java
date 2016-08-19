@@ -2,11 +2,12 @@ package repository;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.UUID;
 
 // <T> est soit un IEvenement, soit une IEntite
 public class EventRecord {
 
-    private Long id; //unique ID
+    private UUID uuid; //unique ID
     private String aggregateId; // could be long si on utilise le type en combinaison
     private String aggregateType; // could be an enum
     private Long userId; // a mettre a ce niveau ou bien au niveau de chaque evt -> ou alors le renommer en lastUpdatedUserId
@@ -16,8 +17,9 @@ public class EventRecord {
     private List<? extends Event> events; // convert to json ce champ devrait etre un string non ?
     //private T aggregate; // a quoi sert ce champ ?
 
-    public EventRecord(Long id, String aggregateId, String aggregateType, Long userId, Long version, Long processId, ZonedDateTime date, List<? extends Event> events) {
-        this.id = id;
+
+    public EventRecord(UUID uuid, String aggregateId, String aggregateType, Long userId, Long version, Long processId, ZonedDateTime date, List<? extends Event> events) {
+        this.uuid = uuid;
         this.aggregateId = aggregateId;
         this.aggregateType = aggregateType;
         this.userId = userId;
@@ -27,12 +29,12 @@ public class EventRecord {
         this.events = events;
     }
 
-    public Long getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getAggregateId() {
