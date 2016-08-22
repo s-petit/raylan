@@ -1,8 +1,7 @@
 package repository;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.ZonedDateTime;
 import java.util.Collections;
@@ -10,9 +9,10 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EventRecordRepositoryITest {
+public class EventRecordRepositoryITest extends AbstractDatabaseITest {
 
-    private EventRecordRepository repository = new EventRecordRepository();
+    @Autowired
+    private EventRecordRepository repository;
 
     @Test
     public void getRecord() {
@@ -25,10 +25,4 @@ public class EventRecordRepositoryITest {
         assertThat(aggregateId).isEqualTo("agreggart");
 
     }
-
-    @After
-    public void after() {
-        repository.delete("agreggart", "meal");
-    }
-
 }

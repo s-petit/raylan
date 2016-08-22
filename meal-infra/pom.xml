@@ -11,6 +11,10 @@
 
     <artifactId>meal-infra</artifactId>
 
+    <properties>
+        <spring.version>4.3.2.RELEASE</spring.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.spe</groupId>
@@ -24,16 +28,39 @@
             <version>3.8.4</version>
         </dependency>
 
+        <!-- EVENT BUS -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
+
+        <!-- CONNECTION POOL -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- DATABASE DRIVER -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.4-1200-jdbc4</version>
         </dependency>
 
+        <!-- SPRING JAVA CONFIGURATION -->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-dbcp2</artifactId>
-            <version>2.0</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- INTEGRATION TESTS -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
         </dependency>
     </dependencies>
 
@@ -70,7 +97,7 @@
                     <!-- JDBC connection parameters -->
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
-                        <url>jdbc:postgresql://localhost:5432/raylan_db</url>
+                        <url>jdbc:postgresql://localhost:5433/raylan_db</url>
                         <user>raylan</user>
                         <password>raylan</password>
                     </jdbc>
@@ -84,7 +111,7 @@
                             <inputSchema>public</inputSchema>
                         </database>
                         <target>
-                            <packageName>org.jooq.util.maven.example</packageName>
+                            <packageName>org.jooq.util.maven</packageName>
                             <directory>target/generated-sources/jooq</directory>
                         </target>
                     </generator>
