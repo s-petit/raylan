@@ -13,4 +13,10 @@ public abstract class Event<DOMAIN, COMMAND extends Command> {
     public abstract DOMAIN toDomain();
 
     public abstract Event fromCommand(COMMAND command);
+
+    public Event(COMMAND command) {
+    }
+
+    public Event() {
+    }
 }

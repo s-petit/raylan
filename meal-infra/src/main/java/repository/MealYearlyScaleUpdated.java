@@ -2,7 +2,6 @@ package repository;
 
 import meal.valueobject.MealYearlyScale;
 
-import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +15,10 @@ public class MealYearlyScaleUpdated extends Event<MealYearlyScale, MealYearlySca
         this.min = min;
         this.max = max;
         this.year = year;
+    }
+
+    public MealYearlyScaleUpdated(MealYearlyScaleCommand command) {
+        this(command.min, command.max, command.year);
     }
 
     @Override
@@ -56,6 +59,7 @@ public class MealYearlyScaleUpdated extends Event<MealYearlyScale, MealYearlySca
     //event sourcing sqns cqrs
     // j'appelle l'api
     // je cree une commande a partir de l'api
+    //TODO SPE quand se fait la validation ?
     // j'appelle le repo a partir de la commande
     // le repo ramene l entite domaine a partir de la commande
     // on cree les evenements associes a partir de la commande et de l'etat courant (decide)
@@ -96,8 +100,7 @@ public class MealYearlyScaleUpdated extends Event<MealYearlyScale, MealYearlySca
     // je retourne le resultat
 
 
+    //TODO cqrs without event bus
     //TODO handlers events bus pour faire ca en async
-
-
 
 }
