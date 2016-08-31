@@ -2,6 +2,7 @@ package configuration;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
+import repository.MealAllowanceRuleRepository;
 
 public class MealApplication extends Application<MealConfiguration> {
 
@@ -12,7 +13,7 @@ public class MealApplication extends Application<MealConfiguration> {
     // TODO SPE : pourquoi le shaded maven plugin et est ce une bonne pratique
     @Override
     public void run(MealConfiguration mealConfiguration, Environment environment) throws Exception {
-        final MealResource resource = new MealResource();
+        final MealResource resource = new MealResource(new MealAllowanceRuleRepository());
         environment.jersey().register(resource);
     }
 }

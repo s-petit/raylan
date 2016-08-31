@@ -3,6 +3,7 @@ package configuration;
 import com.codahale.metrics.annotation.Timed;
 import meal.valueobject.MealInvoice;
 import repository.MealAccountingRepository;
+import repository.MealAllowanceRuleRepository;
 import repository.MealYearlyScaleCommand;
 
 import javax.ws.rs.GET;
@@ -20,6 +21,11 @@ import java.util.stream.Collectors;
 @Produces(MediaType.APPLICATION_JSON)
 public class MealResource {
 
+    private final MealAllowanceRuleRepository repository;
+
+    public MealResource(MealAllowanceRuleRepository repository) {
+        this.repository = repository;
+    }
 
     @GET
     @Timed
@@ -42,6 +48,6 @@ public class MealResource {
     @Path("/scale")
     public void addMealYearlyScale(MealYearlyScaleRequest request) {
         MealYearlyScaleCommand command = new MealYearlyScaleCommand(request.year, request.min, request.max);
-        new MYSR
+        repository.save(command);
     }
 }

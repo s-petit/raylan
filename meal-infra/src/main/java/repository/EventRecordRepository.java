@@ -1,14 +1,17 @@
 package repository;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import static org.jooq.util.maven.tables.EventStore.EVENT_STORE;
@@ -21,6 +24,8 @@ public class EventRecordRepository {
 //<DOMAIN, EVENT extends Event>
     @Autowired
     private DSLContext dsl;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     public String getAggregateId() {
         Record r = dsl.select().from(EVENT_STORE).limit(1).fetchOne();
@@ -47,8 +52,8 @@ public class EventRecordRepository {
 
     }
 
-    public EventRecord getByAggregateId(UUID uuid) {
-        Record r = dsl.select().from(EVENT_STORE).where(EVENT_STORE.UUID.eq(uuid)).fetchOne();
+    public EventRecord getByAggregateId(int year) throws IOException {
+        Record r = dsl.select().from(EVENT_STORE).where(EVENT_STORE.AGGREGATE_ID.eq(year+"")).fetchOne();
         return new EventRecord(r.get(EVENT_STORE.UUID),
                 r.get(EVENT_STORE.AGGREGATE_ID),
                 r.get(EVENT_STORE.AGGREGATE_TYPE),
@@ -56,9 +61,7 @@ public class EventRecordRepository {
                 r.get(EVENT_STORE.VERSION),
                 r.get(EVENT_STORE.PROCESS_ID),
                 ZonedDateTime.ofInstant(r.get(EVENT_STORE.DATE).toInstant(), ZoneOffset.UTC),
-                Arrays.asList(new MealYearlyScaleUpdated());
-
-        //TODO clean parsing of payload to string or event
-                r.get(EVENT_STORE.AGGREGATE_ID);
+                objectMapper.readValue(r.get(EVENT_STORE.PAYLOAD), List.class)
+        );
     }
 }

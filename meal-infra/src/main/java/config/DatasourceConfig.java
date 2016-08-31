@@ -1,5 +1,6 @@
 package config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
@@ -78,6 +79,11 @@ public class DatasourceConfig {
     @Bean
     public DefaultDSLContext dsl() {
         return new DefaultDSLContext(defaultConfiguration());
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 
 }
