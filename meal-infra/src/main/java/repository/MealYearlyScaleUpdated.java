@@ -2,9 +2,6 @@ package repository;
 
 import meal.valueobject.MealYearlyScale;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class MealYearlyScaleUpdated extends Event<MealYearlyScale, MealYearlyScaleCommand> {
 
     public final Double min;
@@ -26,20 +23,16 @@ public class MealYearlyScaleUpdated extends Event<MealYearlyScale, MealYearlySca
         return new MealYearlyScale(min, max, year);
     }
 
+/*
     @Override
     public MealYearlyScaleUpdated fromCommand(MealYearlyScaleCommand command) {
         return new MealYearlyScaleUpdated(command.min, command.max, command.year);
     }
+*/
 
     @Override
     public MealYearlyScale apply(MealYearlyScale mealYearlyScale) {
         return this.toDomain();
-    }
-
-    @Override
-    public List<MealYearlyScaleUpdated> decide(MealYearlyScale mealYearlyScale, MealYearlyScaleCommand command) {
-        MealYearlyScaleUpdated event = fromCommand(command);
-        return Arrays.asList(event);
     }
 
     @Override

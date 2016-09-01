@@ -14,11 +14,11 @@ public class EventRecord {
     private Long version;
     private Long processId;
     private ZonedDateTime date;
-    private List<? extends Event> events; // convert to json ce champ devrait etre un string non ?
+    private List<Event> events; // convert to json ce champ devrait etre un string non ?
     //private T aggregate; // a quoi sert ce champ ?
 
 
-    public EventRecord(UUID uuid, String aggregateId, String aggregateType, Long userId, Long version, Long processId, ZonedDateTime date, List<? extends Event> events) {
+    public EventRecord(UUID uuid, String aggregateId, String aggregateType, Long userId, Long version, Long processId, ZonedDateTime date, List<Event> events) {
         this.uuid = uuid;
         this.aggregateId = aggregateId;
         this.aggregateType = aggregateType;
@@ -85,11 +85,11 @@ public class EventRecord {
         this.date = date;
     }
 
-    public List<? extends Event> getEvents() {
+    public List<Event> getEvents() {
         return events;
     }
 
-    public void setEvents(List<? extends Event> events) {
+    public void setEvents(List<Event> events) {
         this.events = events;
     }
 

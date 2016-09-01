@@ -1,5 +1,6 @@
 package repository;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -10,9 +11,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import static org.jooq.util.maven.tables.EventStore.EVENT_STORE;
 
@@ -63,5 +62,28 @@ public class EventRecordRepository {
                 ZonedDateTime.ofInstant(r.get(EVENT_STORE.DATE).toInstant(), ZoneOffset.UTC),
                 objectMapper.readValue(r.get(EVENT_STORE.PAYLOAD), List.class)
         );
+    }
+
+    public List<Event> getEventsByAggregateId(String aggregateId) {
+        Record r = dsl.select().from(EVENT_STORE).where(EVENT_STORE.AGGREGATE_ID.eq(aggregateId)).fetchOne();
+        try {
+            return objectMapper.readValue(r.get(EVENT_STORE.PAYLOAD), List.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //TODO SPE : meilleure gestion de cette exception
+        return null;
+    }
+
+    // TODO SPE type l'aggregate id
+    // TODO SPE faire une classe dediee pour la serialization / deserialization
+    public void saveEvents(String aggregateId, List<Event> events) {
+        String json = null;
+        try {
+            json = objectMapper.writeValueAsString(events);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        dsl.update(EVENT_STORE).set(EVENT_STORE.PAYLOAD, json).where(EVENT_STORE.AGGREGATE_ID.eq(aggregateId)).execute();
     }
 }
