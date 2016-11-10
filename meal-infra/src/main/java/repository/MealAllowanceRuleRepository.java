@@ -27,7 +27,7 @@ public class MealAllowanceRuleRepository implements AllowanceRule {
     //TODO SPE : peut etre une seule methode qui recup les events les add et les save
     public void save(MealYearlyScaleCommand command) {
         MealYearlyScale scale = get(command.year);
-        List<Event> updated = command.decide(scale);
+        List<MealYearlyScaleUpdated> updated = command.decide(scale);
         List<Event> events = repository.getEventsByAggregateId(command.year+"");
         events.addAll(updated);
 

@@ -5,7 +5,7 @@ import meal.valueobject.MealYearlyScale;
 import java.util.Arrays;
 import java.util.List;
 
-public final class MealYearlyScaleCommand extends Command<MealYearlyScale> {
+public final class MealYearlyScaleCommand extends Command<MealYearlyScale, MealYearlyScaleUpdated> {
 
     public final int year;
     public final Double min;
@@ -18,10 +18,14 @@ public final class MealYearlyScaleCommand extends Command<MealYearlyScale> {
     }
 
     @Override
-    public List<Event> decide(MealYearlyScale mealYearlyScale) {
+    public List<MealYearlyScaleUpdated> decide(MealYearlyScale mealYearlyScale) {
         // no need of domain object right now
-        MealYearlyScaleUpdated event = new MealYearlyScaleUpdated(this);
+        MealYearlyScaleUpdated event = toEvent();
         return Arrays.asList(event);
+    }
+
+    public MealYearlyScaleUpdated toEvent() {
+        return new MealYearlyScaleUpdated(min, max, year);
     }
 
 }

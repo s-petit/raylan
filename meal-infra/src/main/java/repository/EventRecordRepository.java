@@ -1,6 +1,7 @@
 package repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.jooq.util.maven.tables.EventStore.EVENT_STORE;
@@ -48,7 +50,6 @@ public class EventRecordRepository {
                 .where(EVENT_STORE.AGGREGATE_ID.equal(aggregateId))
                 .and(EVENT_STORE.AGGREGATE_TYPE.equal(aggregateType))
                 .execute();
-
     }
 
     public EventRecord getByAggregateId(int year) throws IOException {
@@ -67,7 +68,7 @@ public class EventRecordRepository {
     public List<Event> getEventsByAggregateId(String aggregateId) {
         Record r = dsl.select().from(EVENT_STORE).where(EVENT_STORE.AGGREGATE_ID.eq(aggregateId)).fetchOne();
         try {
-            return objectMapper.readValue(r.get(EVENT_STORE.PAYLOAD), List.class);
+            return objectMapper.readValue(r.get(EVENT_STORE.PAYLOAD), new TypeReference<List<MealYearlyScaleUpdated>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
